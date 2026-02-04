@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="auth-wrapper" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div class="glass-form-container" style="width: 100%; max-width: 420px; padding: 2.5rem; border-radius: 20px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); backdrop-filter: blur(15px); box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+        
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+            <h2 style="font-size: 2rem; letter-spacing: -1px; margin-bottom: 0.5rem;">Vault <span style="color: var(--accent);">Access</span></h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Identify yourself to proceed.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="input-group" style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;">Account Credentials</label>
+                
+                <div style="margin-bottom: 15px;">
+                    {{ form.username }}
+                </div>
+                <div>
+                    {{ form.password }}
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+                <label style="display: block; font-size: 0.75rem; color: var(--accent-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;">Admin Verification</label>
+                <p style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 12px;">Staff members must enter the 4-digit master code.</p>
+                <input type="password" name="admin_passcode" placeholder="Enter Code " maxlength="4" style="letter-spacing: 5px; text-align: center; font-weight: 800;">
+            </div>
+
+            <button type="submit" class="btn-glass" style="width: 100%; margin-top: 2.5rem; padding: 15px; font-size: 0.9rem; font-weight: 800;">AUTHENTICATE</button>
+        </form>
+
+        <div style="margin-top: 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+            <p style="font-size: 0.8rem; color: var(--text-muted);">
+                New to the platform? 
+                <a href="{% url 'register' %}" style="color: var(--accent); text-decoration: none; font-weight: 700; border-bottom: 1px dashed var(--accent);">Initialize Account</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Ensuring the Django-generated inputs match our theme */
+    input[type="text"], 
+    input[type="password"], 
+    input[type="email"] {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        transition: 0.3s;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    }
+
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 0.8rem;
+    }
+</style>
+
+{% endblock %}

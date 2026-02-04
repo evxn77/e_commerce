@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<header style="margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <h1 style="font-size: 2.5rem;">Sales <span style="color:#00ff88">Intelligence</span></h1>
+        <p style="color: var(--text-muted);">Financial performance and order analytics.</p>
+    </div>
+    <div class="card" style="padding: 15px 25px; border-left: 4px solid #00ff88;">
+        <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">GROSS REVENUE</span>
+        <span style="font-size: 1.8rem; font-weight: 800; color: #fff;">₹{{ total_revenue }}</span>
+    </div>
+</header>
+
+<div class="card" style="padding: 0; overflow: hidden; backdrop-filter: blur(20px);">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--glass-border);">
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">ORDER ID</th>
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">CUSTOMER</th>
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">PRODUCT details</th>
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">DATE & TIME</th>
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">AMOUNT</th>
+                <th style="padding: 20px; font-size: 0.75rem; color: var(--accent);">STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in recent_orders %}
+            <tr style="border-bottom: 1px solid var(--glass-border); transition: 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 20px; font-family: monospace; color: var(--text-muted);">#SEC-0{{ order.id }}</td>
+                <td style="padding: 20px;">
+                    <div style="font-weight: 600;">{{ order.user.username }}</div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">{{ order.user.email }}</div>
+                </td>
+                <td style="padding: 20px;">
+                    <span style="font-weight: 500;">{{ order.product.name }}</span>
+                </td>
+                <td style="padding: 20px; font-size: 0.8rem; color: var(--text-muted);">
+                    {{ order.date_ordered|date:"d M Y" }}<br>
+                    <small>{{ order.date_ordered|date:"H:i" }}</small>
+                </td>
+                <td style="padding: 20px; font-weight: 700; color: #00ff88;">₹{{ order.product.price }}</td>
+                <td style="padding: 20px;">
+                    <span style="background: rgba(0, 255, 136, 0.1); color: #00ff88; padding: 5px 10px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; border: 1px solid #00ff88; text-transform: uppercase;">
+                        Confirmed
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="padding: 40px; text-align: center; color: var(--text-muted);">No sales data recorded in the vault yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 2rem;">
+    <a href="{% url 'admin_dashboard' %}" class="btn-glass" style="font-size: 0.7rem;">← BACK TO ANALYTICS</a>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="glass-form-container" style="text-align: center; border: 1px solid #ff4d4d;">
+        <h2 style="color: #ff4d4d;">Confirm Delete</h2>
+        <p style="margin: 1.5rem 0;">Are you sure you want to permanently remove <strong>"{{ product.name }}"</strong> from the vault?</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-glass" style="background: #ff4d4d; color: white; border-color: #ff4d4d;">Yes, Delete Product</button>
+            <a href="{% url 'collections' %}" class="btn-glass" style="margin-left: 10px; border-color: var(--text-muted); color: var(--text-muted);">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

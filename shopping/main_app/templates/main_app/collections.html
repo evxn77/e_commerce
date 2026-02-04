@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<header style="margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <h1 style="font-size: 2.8rem; font-weight: 800; letter-spacing: -1px;">The <span style="color:var(--accent)">Vault</span></h1>
+        <p style="color: var(--text-muted);">Premium assets, secured and authenticated.</p>
+    </div>
+    {% if user.is_staff %}
+    <div style="padding: 10px 20px; background: rgba(0, 242, 255, 0.1); border: 1px solid var(--accent); border-radius: 50px; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;">
+        ADMIN CONTROL ACTIVE
+    </div>
+    {% endif %}
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px;">
+    {% for product in products %}
+    <div class="card" style="padding: 0; overflow: hidden; position: relative; border-radius: 24px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        
+        {% if user.is_staff %}
+        <div style="position: absolute; top: 15px; left: 15px; z-index: 50; display: flex; gap: 10px;">
+            <a href="{% url 'edit_product' product.id %}" class="btn-mini-admin edit-btn">✎ EDIT</a>
+            <a href="{% url 'delete_product' product.id %}" class="btn-mini-admin delete-btn">✕ DEL</a>
+        </div>
+        {% endif %}
+
+        <div style="height: 280px; background: #000; position: relative;">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+            {% else %}
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #222; font-weight: 900; font-size: 3rem;">VAULT</div>
+            {% endif %}
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to top, var(--bg-dark), transparent);"></div>
+        </div>
+
+        <div style="padding: 1.5rem; position: relative; margin-top: -30px; background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(20px);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0; font-size: 1.3rem; font-family: 'Montserrat';">{{ product.name }}</h3>
+                <span style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">₹{{ product.price }}</span>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 1px;">
+                    <span>AVAILABILITY</span>
+                    <span style="color: #ffaa00;">LIMITED STOCK</span>
+                </div>
+                <div style="height: 4px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                    <div style="height: 100%; width: 65%; background: linear-gradient(90deg, var(--accent), #7000ff); box-shadow: 0 0 10px var(--accent);"></div>
+                </div>
+            </div>
+            
+            {% if user.is_authenticated and not user.is_staff %}
+                <form method="POST" action="{% url 'place_order' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-glass" style="width: 100%; border-radius: 12px; font-weight: 800;">ACQUIRE ASSET</button>
+                </form>
+            {% elif user.is_staff %}
+                <div style="text-align: center; border: 1px dashed rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-size: 0.7rem; color: var(--text-muted);">
+                    STOCK MANAGEMENT ENABLED
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-glass" style="display: block; text-align: center; text-decoration: none; border-radius: 12px;">LOGIN TO ACQUIRE</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .btn-mini-admin {
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: 800;
+        text-decoration: none;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: 0.3s;
+    }
+    .edit-btn { color: #00f2ff; background: rgba(0, 242, 255, 0.1); }
+    .edit-btn:hover { background: #00f2ff; color: #000; box-shadow: 0 0 20px #00f2ff; }
+    
+    .delete-btn { color: #ff4d4d; background: rgba(255, 77, 77, 0.1); }
+    .delete-btn:hover { background: #ff4d4d; color: #fff; box-shadow: 0 0 20px #ff4d4d; }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+    }
+</style>
+
+{% endblock %}

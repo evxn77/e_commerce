@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero" style="text-align: center; padding: 6rem 0;">
+    <h1 style="font-size: 4rem; line-height: 1.1;">Elevate Your <span style="color:var(--accent)">Lifestyle</span></h1>
+    <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 1.5rem auto;">
+        Experience the future of digital commerce. We curate premium collections 
+        designed for those who value quality, aesthetics, and seamless functionality.
+    </p>
+    <div style="margin-top: 2.5rem;">
+        <a href="{% url 'collections' %}" class="btn-glass" style="font-size: 1rem; padding: 15px 40px;">Explore Collections</a>
+    </div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 4rem;">
+    
+    <div class="card">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">Curated Excellence</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Every item in our store undergoes a rigorous selection process. We don't just sell products; 
+            we provide solutions that integrate perfectly into your modern workflow. From minimalist 
+            essentials to high-performance gear, find exactly what you need.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">Global Logistics</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Our distribution network spans across continents, ensuring that your order reaches your 
+            doorstep with unparalleled speed. Real-time tracking and premium packaging come standard 
+            with every single purchase made on the ShopEasy platform.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">Secure Ecosystem</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Built on top-tier encryption standards, our platform ensures your data and transactions 
+            remain private. With our integrated UsersApp, managing your orders, history, and 
+            preferences is as fluid as the glassmorphism interface you're navigating right now.
+        </p>
+    </div>
+
+</div>
+
+<section style="margin-top: 8rem; border-top: 1px solid var(--glass-border); padding-top: 4rem;">
+    <div style="max-width: 800px;">
+        <h2 style="font-size: 2rem; margin-bottom: 2rem;">The ShopEasy <span style="color:var(--accent-secondary)">Philosophy</span></h2>
+        <p style="margin-bottom: 1.5rem; opacity: 0.8;">
+            In a world saturated with generic choices, we stand for the extraordinary. Our platform 
+            is architected using the Django Framework, providing a robust backend that handles 
+            everything from user authentication to complex sales reporting for our administrators.
+        </p>
+        <p style="opacity: 0.8;">
+            Whether you are a developer looking at the clean MVC architecture or a customer enjoying 
+             the blurred glass aesthetics, ShopEasy represents the pinnacle of modern web design. 
+             Join thousands of users who have already upgraded their shopping experience.
+        </p>
+    </div>
+</section>
+{% endblock %}

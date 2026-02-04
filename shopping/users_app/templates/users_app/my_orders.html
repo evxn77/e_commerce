@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<header style="margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem;">Your <span style="color:var(--accent)">Order History</span></h1>
+    <p style="color: var(--text-muted);">Track your premium acquisitions and status updates.</p>
+</header>
+
+{% if orders %}
+<div class="card" style="padding: 0; overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--glass-border);">
+                <th style="padding: 20px; font-family: 'Montserrat'; font-size: 0.8rem; color: var(--accent);">DATE</th>
+                <th style="padding: 20px; font-family: 'Montserrat'; font-size: 0.8rem; color: var(--accent);">PRODUCT</th>
+                <th style="padding: 20px; font-family: 'Montserrat'; font-size: 0.8rem; color: var(--accent);">PRICE</th>
+                <th style="padding: 20px; font-family: 'Montserrat'; font-size: 0.8rem; color: var(--accent);">STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr style="border-bottom: 1px solid var(--glass-border); transition: 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 20px; font-size: 0.9rem; opacity: 0.8;">{{ order.date_ordered|date:"M d, Y" }}</td>
+                <td style="padding: 20px; font-weight: 600;">{{ order.product.name }}</td>
+                <td style="padding: 20px; color: var(--accent);">$ {{ order.product.price }}</td>
+                <td style="padding: 20px;">
+                    <span style="background: rgba(0, 242, 255, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">
+                        {{ order.status|upper }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="card" style="text-align: center; padding: 4rem;">
+    <h3 style="color: var(--text-muted);">No orders found.</h3>
+    <p style="margin-bottom: 2rem;">It looks like you haven't started your collection yet.</p>
+    <a href="{% url 'collections' %}" class="btn-glass">Start Shopping</a>
+</div>
+{% endif %}
+{% endblock %}
