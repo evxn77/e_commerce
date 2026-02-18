@@ -45,10 +45,10 @@ def register_view(request):
         admin_code = request.POST.get('admin_registration_code')
 
         if form.is_valid():
-            # Save the user (this handles password hashing automatically)
+            # Save the user 
             user = form.save()
             
-            # Elevate to Admin if secret code is correct
+            # Admin Switch
             if admin_code == "0000":
                 user.is_staff = True
                 user.is_superuser = True
@@ -63,7 +63,7 @@ def register_view(request):
             # Redirect to Home page
             return redirect('home')
         else:
-            # If form is invalid (e.g., password too short), show error
+            # If form is invalid 
             for error in form.errors.values():
                 messages.error(request, error)
     else:
@@ -77,7 +77,6 @@ def logout_view(request):
 
 def home_view(request):
     return render(request, 'main_app/home.html')
-# Add this to the bottom of main_app/views.py
 
 def about_view(request):
     """View for the About page"""
@@ -85,4 +84,5 @@ def about_view(request):
 
 def contact_view(request):
     """View for the Contact page"""
+
     return render(request, 'main_app/contact.html')
