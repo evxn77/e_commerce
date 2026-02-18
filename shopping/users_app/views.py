@@ -16,6 +16,6 @@ def place_order(request, product_id):
 
 @login_required
 def my_orders(request):
-    # Change .order_order_by to .order_by
     orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
+
     return render(request, 'users_app/my_orders.html', {'orders': orders})
