@@ -14,14 +14,14 @@ def admin_dashboard(request):
     total_products = Product.objects.count()
     # Total Orders
     total_orders = Order.objects.count()
-    # Total Revenue (Sum of prices of all ordered products)
+    # Total Revenue 
     total_revenue = Order.objects.aggregate(total=Sum('product__price'))['total'] or 0
     
     context = {
         'total_users': total_users,
         'total_products': total_products,
         'total_orders': total_orders,
-        'total_revenue': total_revenue, # Pass this to dashboard too!
+        'total_revenue': total_revenue, 
     }
     return render(request, 'admin_app/dashboard.html', context)
 
@@ -69,4 +69,5 @@ def sale_report(request):
 @staff_member_required
 def view_all_users(request):
     users = User.objects.all()
+
     return render(request, 'admin_app/view_users.html', {'users': users})
